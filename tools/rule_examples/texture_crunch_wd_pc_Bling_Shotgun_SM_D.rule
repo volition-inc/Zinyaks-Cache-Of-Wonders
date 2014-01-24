@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<ctg>
+	<in_platforms>
+		<platform>
+			pc
+			<source>
+				bling_shotgun_sm_d.tga
+			</source>
+			<target>
+				Bling_Shotgun_SM_D.cvbm_pc
+			</target>
+			<target>
+				Bling_Shotgun_SM_D.gvbm_pc
+			</target>
+			<target>
+				Bling_Shotgun_SM_D.acl_pc
+			</target>
+		</platform>
+	</in_platforms>
+	<log>
+		Bling_Shotgun_SM_D.txt
+	</log>
+	<warnings_as_errors>
+		true
+	</warnings_as_errors>
+	<errors_are_fatal>
+		true
+	</errors_are_fatal>
+</ctg>

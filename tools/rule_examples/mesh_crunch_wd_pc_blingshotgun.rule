@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<ctg>
+	<in_platforms>
+		<platform>
+			pc
+			<source>
+				blingshotgun.cmeshx
+			</source>
+			<target>
+				blingshotgun.ccmesh_pc
+			</target>
+			<target>
+				blingshotgun.gcmesh_pc
+			</target>
+			<target>
+				blingshotgun.morph_key_pc
+			</target>
+		</platform>
+	</in_platforms>
+	<log>
+		blingshotgun_character_mesh.txt
+	</log>
+	<silent_verror>
+		true
+	</silent_verror>
+	<warnings_as_errors>
+		true
+	</warnings_as_errors>
+	<errors_are_fatal>
+		true
+	</errors_are_fatal>
+</ctg>

@@ -1,0 +1,421 @@
+<root>
+	<materials>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Specular_Map_varList></Specular_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Specular_Map_Amount></Specular_Map_Amount>
+			<Specular_Map></Specular_Map>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height>1.000000</Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_bbsimple1</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Specular_Map_varList></Specular_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>1</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Specular_Map_Amount></Specular_Map_Amount>
+			<Specular_Map></Specular_Map>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_at_bbsimple1</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination>0.000000</Self_Illumination>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_bbsimple3</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<Mat_Cull_Mode>1</Mat_Cull_Mode>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>1</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_at_bbsimple3</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Sphere_Map_varList></Sphere_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Base_Opacity></Base_Opacity>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color>
+			<Sphere_Map_Amount></Sphere_Map_Amount>
+			<Sphere_Map></Sphere_Map>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3shaderball</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Blend_Map_varList></Blend_Map_varList>
+			<Sphere_Map_2_varList></Sphere_Map_2_varList>
+			<Sphere_Map_1_varList></Sphere_Map_1_varList>
+			<Specular_Map_varList></Specular_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Specular_Map_Amount></Specular_Map_Amount>
+			<Specular_Map></Specular_Map>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color>
+			<Blend_Map></Blend_Map>
+			<Sphere_Map_2></Sphere_Map_2>
+			<Sphere_Map_1></Sphere_Map_1>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3pcskinfull</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<Blue_Color>{0.000000, 0.000000, 1.000000, 1.000000}</Blue_Color>
+			<Green_Color>{0.000000, 1.000000, 0.000000, 1.000000}</Green_Color>
+			<Red_Color>{1.000000, 0.000000, 0.000000, 1.000000}</Red_Color>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Pattern_Map_varList></Pattern_Map_varList>
+			<Sphere_Map_varList></Sphere_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Diffuse_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Diffuse_Color_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Sphere_Map_Amount></Sphere_Map_Amount>
+			<Sphere_Map></Sphere_Map>
+			<Diffuse_Color_c>{0.000000, 0.000000, 1.000000, 1.000000}</Diffuse_Color_c>
+			<Diffuse_Color_b>{0.000000, 1.000000, 0.000000, 1.000000}</Diffuse_Color_b>
+			<Diffuse_Color_a>{1.000000, 0.000000, 0.000000, 1.000000}</Diffuse_Color_a>
+			<Pattern_Map_TilingV>1.000000</Pattern_Map_TilingV>
+			<Pattern_Map_TilingU>1.000000</Pattern_Map_TilingU>
+			<pattern_map></pattern_map>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<ClampV2>0</ClampV2>
+			<ClampU2>0</ClampU2>
+			<ClampV1>0</ClampV1>
+			<ClampU1>0</ClampU1>
+			<Diffuse_Map></Diffuse_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3pccloth</shader>		
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Blend_Map_varList></Blend_Map_varList>
+			<Sphere_Map_2_varList></Sphere_Map_2_varList>
+			<Sphere_Map_1_varList></Sphere_Map_1_varList>
+			<Specular_Color_2_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_2_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Fresnel_Alpha_Interface_2></Fresnel_Alpha_Interface_2>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength_2></Fresnel_Strength_2>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power_2></Specular_Power_2>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface_2></Specular_Alpha_Interface_2>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha_2></Specular_Alpha_2>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color_2>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color_2>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Blend_Map></Blend_Map>
+			<Sphere_Map_2></Sphere_Map_2>
+			<Sphere_Map_1></Sphere_Map_1>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3npcskinfull</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<Blue_Color>{0.000000, 0.000000, 1.000000, 1.000000}</Blue_Color>
+			<Green_Color>{0.000000, 1.000000, 0.000000, 1.000000}</Green_Color>
+			<Red_Color>{1.000000, 0.000000, 0.000000, 1.000000}</Red_Color>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Sphere_Map_varList></Sphere_Map_varList>
+			<Specular_Map_varList></Specular_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Pattern_Map_varList></Pattern_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Specular_Map_Amount></Specular_Map_Amount>
+			<Specular_Map></Specular_Map>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Sphere_Map_Amount></Sphere_Map_Amount>
+			<Sphere_Map></Sphere_Map>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color_c>{0.000000, 0.000000, 1.000000, 1.000000}</Diffuse_Color_c>
+			<Diffuse_Color_b>{0.000000, 1.000000, 0.000000, 1.000000}</Diffuse_Color_b>
+			<Diffuse_Color_a>{1.000000, 0.000000, 0.000000, 1.000000}</Diffuse_Color_a>
+			<pattern_map></pattern_map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3npcclothfull</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<Blue_Color>{0.000000, 0.000000, 1.000000, 1.000000}</Blue_Color>
+			<Green_Color>{0.000000, 1.000000, 0.000000, 1.000000}</Green_Color>
+			<Red_Color>{1.000000, 0.000000, 0.000000, 1.000000}</Red_Color>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Sphere_Map_varList></Sphere_Map_varList>
+			<Specular_Map_varList></Specular_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Pattern_Map_varList></Pattern_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Pulse_Base>0.000000</Pulse_Base>
+			<Pulse_Max>0.000000</Pulse_Max>
+			<Pulse_Rate>1.000000</Pulse_Rate>
+			<Specular_Map_Amount></Specular_Map_Amount>
+			<Specular_Map></Specular_Map>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Sphere_Map_Amount></Sphere_Map_Amount>
+			<Sphere_Map></Sphere_Map>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color_c>{0.000000, 0.000000, 1.000000, 1.000000}</Diffuse_Color_c>
+			<Diffuse_Color_b>{0.000000, 1.000000, 0.000000, 1.000000}</Diffuse_Color_b>
+			<Diffuse_Color_a>{1.000000, 0.000000, 0.000000, 1.000000}</Diffuse_Color_a>
+			<pattern_map></pattern_map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3npcclothPulse</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Sphere_Map_varList></Sphere_Map_varList>
+			<Specular_Color_varList>{0.000000, 0.000000, 0.000000, 1.000000}</Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Diffuse_Map_varList></Diffuse_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Sphere_Map_Amount></Sphere_Map_Amount>
+			<Sphere_Map></Sphere_Map>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Diffuse_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3shaderballadd</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<distortionsurface>false</distortionsurface>
+			<Glows>false</Glows>
+			<Reflection_Map_dynReflect>true</Reflection_Map_dynReflect>
+			<CastShadows>true</CastShadows>
+			<Specular_Color_varList></Specular_Color_varList>
+			<Normal_Map_varList></Normal_Map_varList>
+			<Dob_Map_varList></Dob_Map_varList>
+			<Mat_Alpha_Mode>0</Mat_Alpha_Mode>
+			<Self_Illumination></Self_Illumination>
+			<Fresnel_Alpha_Interface></Fresnel_Alpha_Interface>
+			<Fresnel_Strength></Fresnel_Strength>
+			<Specular_Power></Specular_Power>
+			<Specular_Alpha_Interface></Specular_Alpha_Interface>
+			<Specular_Alpha></Specular_Alpha>
+			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
+			<Diffuse_Map></Diffuse_Map>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_MapmapChannel>1</Normal_MapmapChannel>
+			<Normal_Map_Height></Normal_Map_Height>
+			<Normal_Map></Normal_Map>
+			<Dob_Map></Dob_Map>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>ir_sr3pchair</shader>
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>
+			<noRender>false</noRender>
+			<Texture>norender.tga</Texture>
+			<revision>0</revision>
+			<is_ctg_shader>false</is_ctg_shader>
+			<material_name></material_name>
+			<shader>privacy_bar</shader>
+		</material>	
+	</materials>
+</root>

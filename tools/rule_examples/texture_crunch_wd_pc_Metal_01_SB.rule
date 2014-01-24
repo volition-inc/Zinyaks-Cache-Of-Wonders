@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<ctg>
+	<in_platforms>
+		<platform>
+			pc
+			<source>
+				metal_01_sb.tga
+			</source>
+			<target>
+				Metal_01_SB.cvbm_pc
+			</target>
+			<target>
+				Metal_01_SB.gvbm_pc
+			</target>
+			<target>
+				Metal_01_SB.acl_pc
+			</target>
+		</platform>
+	</in_platforms>
+	<log>
+		log_Metal_01_SB.txt
+	</log>
+	<warnings_as_errors>
+		true
+	</warnings_as_errors>
+	<errors_are_fatal>
+		true
+	</errors_are_fatal>
+</ctg>

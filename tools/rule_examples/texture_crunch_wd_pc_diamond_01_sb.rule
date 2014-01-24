@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<ctg>
+	<in_platforms>
+		<platform>
+			pc
+			<source>
+				diamond_01_sb.tga
+			</source>
+			<target>
+				diamond_01_sb.cvbm_pc
+			</target>
+			<target>
+				diamond_01_sb.gvbm_pc
+			</target>
+			<target>
+				diamond_01_sb.acl_pc
+			</target>
+		</platform>
+	</in_platforms>
+	<log>
+		log_diamond_01_sb.txt
+	</log>
+	<warnings_as_errors>
+		true
+	</warnings_as_errors>
+	<errors_are_fatal>
+		true
+	</errors_are_fatal>
+</ctg>
