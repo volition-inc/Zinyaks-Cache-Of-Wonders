@@ -425,46 +425,65 @@ def write_crunch_rule( filename, resource_type, textures = None ):
 	resources = { '.matlibx' : 'material_library',
 	              '.cmeshx' : 'character_mesh',
 	              '.rigx' : 'rig',
-	              '.peg' : 'texture_target' }
+	              '.peg' : 'texture_target',
+	              '.texture' : 'texture' }
 
 	crunch_targets = { '.matlibx' : [ '.matlib_' ],
 	            '.cmeshx' : [ '.ccmesh_', '.gcmesh_', '.morph_key_' ],
 	            '.rigx' : [ '.rig_' ],
-	            '.peg' : [ '.cpeg_', '.gpeg_' ] }
+	            '.peg' : [ '.cpeg_', '.gpeg_' ],
+	            '.texture' : [ '.cvbm_', '.gvbm_', '.acl_' ] }
 
 	crunch_names = { '.rigx' : 'rig_cruncher_wd_',
 	                 '.cmeshx' : 'mesh_crunch_wd_',
 	                 '.peg' : 'peg_assemble_wd_',
-	                 '.matlibx' : 'material_library_crunch_wd_' }
+	                 '.matlibx' : 'material_library_crunch_wd_',
+	                 '.texture' : 'texture_crunch_wd_' }
+
+	texture_types = { '.peg' : [ '.cvbm_', '.gvbm_' ] }
+
 
 	platform = 'pc'
 	header = xml.etree.cElementTree.Element( 'ctg' )
 	in_platforms = xml.etree.cElementTree.SubElement( header, 'in_platforms' )
 	cur_platform = xml.etree.cElementTree.SubElement( in_platforms, 'platform' )
 	cur_platform.text = platform
+	base_name = None
+	base_no_ext = None
 
 	if not resource_type == '.peg':
-		base_name = os.path.basename( filename )
-		base_no_ext = os.path.splitext( base_name )[ 0 ]
+
+		# write the source filename
 		source = xml.etree.cElementTree.SubElement( cur_platform, 'source' )
-		source.text = filename
+		if resource_type == '.texture':
+			base_name = os.path.basename( textures )
+			source.text = textures
+		else:
+			base_name = os.path.basename( filename )
+			source.text = filename
+		base_no_ext = os.path.splitext( base_name )[ 0 ]
 
-		# first attr
-		attr = xml.etree.cElementTree.SubElement( source, 'attr' )
-		display_name = xml.etree.cElementTree.SubElement( attr, 'display_name' )
-		display_name.text = 'Name'
-		val = xml.etree.cElementTree.SubElement( attr, 'val' )
-		val.text = base_no_ext + resource_type
 
-		# second attr
-		attr1 = xml.etree.cElementTree.SubElement( source, 'attr' )
-		display_name1 = xml.etree.cElementTree.SubElement( attr1, 'display_name' )
-		display_name1.text = 'Resource Type'
-		val1 = xml.etree.cElementTree.SubElement( attr1, 'val' )
-		val1.text = resources[ resource_type ]
+		if not resource_type == '.texture':
+
+			# first attr
+			attr = xml.etree.cElementTree.SubElement( source, 'attr' )
+			display_name = xml.etree.cElementTree.SubElement( attr, 'display_name' )
+			display_name.text = 'Name'
+			val = xml.etree.cElementTree.SubElement( attr, 'val' )
+			val.text = base_no_ext + resource_type
+
+			# second attr
+			attr1 = xml.etree.cElementTree.SubElement( source, 'attr' )
+			display_name1 = xml.etree.cElementTree.SubElement( attr1, 'display_name' )
+			display_name1.text = 'Resource Type'
+			val1 = xml.etree.cElementTree.SubElement( attr1, 'val' )
+			val1.text = resources[ resource_type ]
+
+			# TO-DO handle additional attrs.. ( texture_is_linear_color_space, normal_map )
 
 	else:
-		data_types = [ '.cvbm_', '.gvbm_' ]
+		data_types = texture_types[ resource_type ]
 		for texture in textures:
 			for data in data_types:
 				base_name = os.path.basename( texture )
@@ -473,53 +492,72 @@ def write_crunch_rule( filename, resource_type, textures = None ):
 				source = xml.etree.cElementTree.SubElement( cur_platform, 'source' )
 				source.text = os.path.join( os.path.dirname( texture ), base_data_ext )
 
-				# first attr
-				attr = xml.etree.cElementTree.SubElement( source, 'attr' )
-				display_name = xml.etree.cElementTree.SubElement( attr, 'display_name' )
-				display_name.text = 'Name'
-				val = xml.etree.cElementTree.SubElement( attr, 'val' )
-				val.text = base_data_ext
+				#if resource_type == '.peg':
+					## first attr
+					#attr = xml.etree.cElementTree.SubElement( source, 'attr' )
+					#display_name = xml.etree.cElementTree.SubElement( attr, 'display_name' )
+					#display_name.text = 'Name'
+					#val = xml.etree.cElementTree.SubElement( attr, 'val' )
+					#if resource_type == '.texture':
+						#val.text = base_name
+					#else:
+						#val.text = base_data_ext
 
-				# second attr
-				attr1 = xml.etree.cElementTree.SubElement( source, 'attr' )
-				display_name1 = xml.etree.cElementTree.SubElement( attr1, 'display_name' )
-				display_name1.text = 'Resource Type'
-				val1 = xml.etree.cElementTree.SubElement( attr1, 'val' )
-				val1.text = resources[ resource_type ]
+					## second attr
+					#attr1 = xml.etree.cElementTree.SubElement( source, 'attr' )
+					#display_name1 = xml.etree.cElementTree.SubElement( attr1, 'display_name' )
+					#display_name1.text = 'Resource Type'
+					#val1 = xml.etree.cElementTree.SubElement( attr1, 'val' )
+					#val1.text = resources[ resource_type ]
+
+					## TO-DO handle additional attrs.. ( texture_is_linear_color_space, normal_map )
 
 	# output target files
 	targets = crunch_targets[ resource_type ]
 	for target in targets:
 		temp_target = xml.etree.cElementTree.SubElement( cur_platform, 'target' )
-		new_file_name =  base_no_ext + target + platform
-		temp_target.text = os.path.join( os.path.dirname( filename ), new_file_name )
+		if resource_type == '.peg':
+			base_name = os.path.basename( filename )
+			base_no_ext = os.path.splitext( base_name )[ 0 ]
+			target_filename = base_no_ext + target + platform
+		else:
+			target_filename =  base_no_ext + target + platform
+		temp_target.text = os.path.join( os.path.dirname( filename ), target_filename )
 
-	output = xml.etree.cElementTree.SubElement( header, 'output' )
-	output.text =  os.path.join( os.path.dirname( filename ), 'crunchr_1.txt' )
-	log = xml.etree.cElementTree.SubElement( header, 'log' )
-	log.text = os.path.join( os.path.dirname( filename ), 'crunchp_1.txt' )
-	project = xml.etree.cElementTree.SubElement( header, 'project' )
-	project.text = 'SR3'
-	add_args = xml.etree.cElementTree.SubElement( header, 'additional_args' )
-	add_args.text = ' '
-	output_flags = xml.etree.cElementTree.SubElement( header, 'output_flags' )
-	output_flags.text = 'ctg,file'
-	timeout_msec = xml.etree.cElementTree.SubElement( header, 'timeout_msec' )
-	timeout_msec.text = '1800000'
-	silent_verror = xml.etree.cElementTree.SubElement( header, 'silent_verror' )
-	silent_verror.text = 'true'
-	warnings_as_errors = xml.etree.cElementTree.SubElement( header, 'warnings_as_errors' )
-	warnings_as_errors.text = 'true'
-	errors_are_fatal = xml.etree.cElementTree.SubElement( header, 'errors_are_fatal' )
-	errors_are_fatal.text = 'true'
-	out_platforms = xml.etree.cElementTree.SubElement( header, 'out_platforms' )
-	out_platforms.text = ' '
-	out_rules = xml.etree.cElementTree.SubElement( header, 'out_rules' )
-	out_rules.text = ' '
+	if resource_type == '.texture' or resource_type == '.peg':
+		log = xml.etree.cElementTree.SubElement( header, 'log' )
+		log.text = os.path.join( os.path.dirname( filename ), ( 'log_' + base_no_ext + '_' + resources[ resource_type ] + '.txt' ) )
+		warnings_as_errors = xml.etree.cElementTree.SubElement( header, 'warnings_as_errors' )
+		warnings_as_errors.text = 'true'
+		errors_are_fatal = xml.etree.cElementTree.SubElement( header, 'errors_are_fatal' )
+		errors_are_fatal.text = 'true'
+	else:
+		output = xml.etree.cElementTree.SubElement( header, 'output' )
+		output.text =  os.path.join( os.path.dirname( filename ), 'log1_' + base_no_ext + '_' + resources[ resource_type ] + '.txt' )
+		log = xml.etree.cElementTree.SubElement( header, 'log' )
+		log.text = os.path.join( os.path.dirname( filename ), 'log2_' + base_no_ext + '_' + resources[ resource_type ] +  '.txt' )
+		project = xml.etree.cElementTree.SubElement( header, 'project' )
+		project.text = 'SR3'
+		add_args = xml.etree.cElementTree.SubElement( header, 'additional_args' )
+		add_args.text = ' '
+		output_flags = xml.etree.cElementTree.SubElement( header, 'output_flags' )
+		output_flags.text = 'ctg,file'
+		timeout_msec = xml.etree.cElementTree.SubElement( header, 'timeout_msec' )
+		timeout_msec.text = '1800000'
+		silent_verror = xml.etree.cElementTree.SubElement( header, 'silent_verror' )
+		silent_verror.text = 'true'
+		warnings_as_errors = xml.etree.cElementTree.SubElement( header, 'warnings_as_errors' )
+		warnings_as_errors.text = 'true'
+		errors_are_fatal = xml.etree.cElementTree.SubElement( header, 'errors_are_fatal' )
+		errors_are_fatal.text = 'true'
+		out_platforms = xml.etree.cElementTree.SubElement( header, 'out_platforms' )
+		out_platforms.text = ' '
+		out_rules = xml.etree.cElementTree.SubElement( header, 'out_rules' )
+		out_rules.text = ' '
 
 	# write out the mesh crunch rule file
 	rule_xml = pretty_xml( header )
-	crunch_name = crunch_names[ resource_type ] + platform + '_last.rule'
+	crunch_name = crunch_names[ resource_type ] + platform + '_' + base_no_ext + '.rule'
 	crunch_file =  os.path.join( os.path.dirname( filename ), crunch_name )
 	with open( crunch_file, 'w' ) as crunch_rule:
 		crunch_rule.write( rule_xml )
@@ -2176,6 +2214,7 @@ class App_Frame( wx.Frame ):
 			wx.MessageBox( 'Make sure the "sr_shaders.xml" file is in the same directory as the FBX_Converter.exe', style = wx.OK )
 
 		self.table_grid = Table_Grid( self, self.shader_names )
+		self.table_grid.SetDoubleBuffered( False )
 		#menu_settings = wx.Menu()
 		#menu_settings.AppendRadioItem(200, "&All", "Show All Files")
 		#menu_settings.AppendRadioItem(201, "&Preloaded", "Show Preloaded Files")
@@ -2417,6 +2456,11 @@ class App_Frame( wx.Frame ):
 
 		# write out the peg rule
 		if write_cmeshx_file or write_matlibx_file:
+
+			# write a rule for each texture file
+			for texture in self.textures[ self.selected_mesh ]:
+				write_crunch_rule( self.fbx_file, '.texture', textures = texture )
+
 			write_crunch_rule( self.fbx_file, '.peg', textures = self.textures[ self.selected_mesh ] )
 
 		self.SetSizer( self.mSizer )
