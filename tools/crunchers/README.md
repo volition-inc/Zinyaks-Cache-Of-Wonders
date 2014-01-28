@@ -8,15 +8,18 @@ Currently, the FBX tool might use absolute paths for sources and targets in the 
 
 The general format of running a cruncher is
 
-<cruncher name> <rule file>
+/<cruncher name/> /<-p packfile\_path/> /<-p packfile\_path/> /<rule file/>
 
 i.e.
 
-texture_crunch_wd.exe blingshotgun_texture.rule
+mesh\_crunch\_wd.exe -p pack/shaders.vpp\_pc blingshotgun\_mesh.rule
 
-Currently, the following crunchers work:
+Packfile support has been added for both the material library and mesh crunchers.  Both of these crunchers need source shader information in order to properly crunch their respective filetypes.  These shader parameters are contained in .fxinfo files which have not been distributed with the game.  These shader parameter files are contained in the shaders.vpp_pc file which can be found in this folder.
+
+The crunchers are as follows:
 
 * Texture Cruncher - used to crunch a source texture (i.e. targa file) into a platform specific vbm (Volition bitmap format)
 * Peg Assembler - used to assemble vbm files into a platform specific peg file
 * Rig Cruncher - used to crunch .rigx files into platform specific rig files
-
+* Material Library Cruncher - used to crunch .matlibx files to platform specific matlib_pc files
+* Mesh Crunhcer - used to crunch .cmeshx files into platform specific mesh files that can be consumed by the game
