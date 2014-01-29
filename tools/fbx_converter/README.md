@@ -21,7 +21,7 @@ handled properly.
 
 
 
-![](images/image012.png)
+![](https://voligitlab01.dsvolition.com/modding/sr4_modding_private/blob/master/tools/fbx_converter/images/image001.png)
 
 
 
