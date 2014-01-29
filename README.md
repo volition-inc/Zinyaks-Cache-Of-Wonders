@@ -7,10 +7,10 @@ This is a early pre-release of tools, and is not yet an "initial release" of the
 
 ## Tools
 - [Material Library Cruncher](../tree/master/tools/crunchers)
-- [Texture Cruncher](../tree/master/tools/cruncher)
-- [Peg Assembler](../tree/master/tools/cruncher)
-- [Mesh Cruncher](../tree/master/tools/cruncher)
-- [Rig Cruncher](../tree/master/tools/cruncher)
+- [Texture Cruncher](../tree/master/tools/crunchers)
+- [Peg Assembler](../tree/master/tools/crunchers)
+- [Mesh Cruncher](../tree/master/tools/crunchers)
+- [Rig Cruncher](../tree/master/tools/crunchers)
 - [FBX Converter](../tree/master/tools/fbx_converter)
 - [Vehicle Table Cruncher](../tree/master/tools/cvtf_cruncher)
-- [vPkg](../tree/master/tools/vpkg)
+- [vPkg](../tree/master/tools/vPkg)
