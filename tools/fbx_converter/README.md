@@ -21,7 +21,7 @@ handled properly.
 
 
 
-![](https://voligitlab01.dsvolition.com/modding/sr4_modding_private/blob/master/tools/fbx_converter/images/image001.png)
+![](../tree/master/tools/fbx_converter/images/image001.png)
 
 
 
@@ -74,7 +74,7 @@ proper material attribute.
 
 
 
-![](images/image013.jpg)
+![](../tree/master/tools/fbx_converter/images/image013.jpg)
 
 
 
@@ -89,7 +89,7 @@ details should come on setting this material up later.
 
 If you are working in 3dsmax you should set your units to the following.
 
-![](images/image014.jpg)
+![](../tree/master/tools/fbx_converter/images/image014.jpg)
 
 
 
@@ -97,7 +97,7 @@ If you are working in 3dsmax you should set your units to the following.
 
 If you are working in Maya you should adjust your settings to the following.
 
-![](images/image005.png)
+![](../tree/master/tools/fbx_converter/images/image005.png)
 
 
 
@@ -120,13 +120,13 @@ Up Axis = Y-up
 
 **MAYA FBX EXPORT SETTINGS**
 
-![](images/image015.jpg)****
+![](../tree/master/tools/fbx_converter/images/image015.jpg)****
 
 ** **
 
 **3dsMax FBX EXPORT SETTINGS**
 
-![](images/image016.jpg)
+![](../tree/master/tools/fbx_converter/images/image016.jpg)
 
 
 **Using the FBX Converter**
@@ -150,6 +150,6 @@ location as the source FBX file.
 
 
 
-![](images/image017.jpg)
+![](../tree/master/tools/fbx_converter/images/image017.jpg)
 
 
