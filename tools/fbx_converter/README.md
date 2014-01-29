@@ -21,7 +21,7 @@ handled properly.
 
 
 
-![](../tree/master/tools/fbx_converter/images/image001.png)
+![](/modding/sr4_modding_private/tree/master/tools/fbx_converter/images/image012.png)
 
 
 
@@ -74,7 +74,7 @@ proper material attribute.
 
 
 
-![](../tree/master/tools/fbx_converter/images/image013.jpg)
+![](FBX_Converter_files/image013.jpg)
 
 
 
@@ -89,7 +89,7 @@ details should come on setting this material up later.
 
 If you are working in 3dsmax you should set your units to the following.
 
-![](../tree/master/tools/fbx_converter/images/image014.jpg)
+![](FBX_Converter_files/image014.jpg)
 
 
 
@@ -97,7 +97,7 @@ If you are working in 3dsmax you should set your units to the following.
 
 If you are working in Maya you should adjust your settings to the following.
 
-![](../tree/master/tools/fbx_converter/images/image005.png)
+![](FBX_Converter_files/image005.png)
 
 
 
@@ -120,13 +120,18 @@ Up Axis = Y-up
 
 **MAYA FBX EXPORT SETTINGS**
 
-![](../tree/master/tools/fbx_converter/images/image015.jpg)****
+![](FBX_Converter_files/image015.jpg)****
 
 ** **
 
 **3dsMax FBX EXPORT SETTINGS**
 
-![](../tree/master/tools/fbx_converter/images/image016.jpg)
+![](FBX_Converter_files/image016.jpg)** **
+
+
+
+
+
 
 
 **Using the FBX Converter**
@@ -150,6 +155,5 @@ location as the source FBX file.
 
 
 
-![](../tree/master/tools/fbx_converter/images/image017.jpg)
-
+![](FBX_Converter_files/image017.jpg)
 
