@@ -21,7 +21,7 @@ handled properly.
 
 
 
-![](../tree/master/tools/fbx_converter/images/image012.png)
+![](../blob/master/tools/fbx_converter/images/image012.png)
 
 
 
