@@ -21,7 +21,7 @@ handled properly.
 
 
 
-![](/modding/sr4_modding_private/tree/master/tools/fbx_converter/images/image012.png)
+![](/modding/sr4_modding_private/blob/master/tools/fbx_converter/images/image012.png)
 
 
 
