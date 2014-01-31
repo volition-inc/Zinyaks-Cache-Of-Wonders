@@ -158,9 +158,9 @@ location as the source FBX file.
 ![](https://voligitlab01.dsvolition.com/uploads/note/attachment/7/image017.jpg)
 
 **Thomas Rausch Appended Info** 
-The following is just some further clarification on the required installers. Here is what installers I downloaded specficially. 
+The following is just some further clarification on the required installers. Here is which installers I downloaded specficially. 
     
-* Python 2.6.6 is the latest version of Python 2.6 with a Windows installer so that’s what I downloaded from this page: 
+* Python 2.6.6 is the latest version of Python 2.6 with a Windows installer so that’s the one I downloaded from this page: 
 http://www.python.org/getit/releases/2.6.6/  
 I downloaded the 64 bit version named “Windows X86-64 MSI Installer (2.6.6) [1] (sig)”
 
