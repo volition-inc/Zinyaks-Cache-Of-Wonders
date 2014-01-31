@@ -157,3 +157,23 @@ location as the source FBX file.
 
 ![](https://voligitlab01.dsvolition.com/uploads/note/attachment/7/image017.jpg)
 
+**Thomas Rausch Appended Info** 
+The following is just some further clarification on the required installers. Here is what installers I downloaded specficially. 
+    
+* Python 2.6.6 is the latest version of Python 2.6 with a Windows installer so that’s what I downloaded from this page: 
+http://www.python.org/getit/releases/2.6.6/  
+I downloaded the 64 bit version named “Windows X86-64 MSI Installer (2.6.6) [1] (sig)”
+
+* Next get Wx Python from: http://www.wxpython.org/download.php
+ Grab the one named “wxPython3.0-win64-py26”
+
+* Next you need to get the FBX 2014.1 SDK from Autodesk.  Autodesk’s site doesn’t like to be linked to, some cookie related thing.  So go ahead and go to http://www.autodesk.com/products/fbx/overview
+ Scroll down to “Download free* FBX software development kits (SDKs)”.   
+ Click that, once on that page scroll down to “SDK Archive”.  
+ Click that, once on that page click “FBX 2014.1 SDK”
+ Download the Windows Installer under the “Python Binding” heading. 
+
+* Install all 3 programs, with Python 2.6 being installed first. 
+ Finally you need to copy some files from the FBX 2014.1 SDK directory to your Python 2.6 directory. This link from Autodesk explains it pretty well: http://download.autodesk.com/us/fbx/20112/FBX_SDK_HELP/index.html?url=WS73099cc142f48755-751de9951262947c01c-6dc7.htm,topicNumber=d0e8430
+
+
