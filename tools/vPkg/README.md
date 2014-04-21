@@ -13,6 +13,7 @@ Running the tool involves the command line so batch files can easily be created 
            -build_str2 [str2 filename]
            -build_packfile [packfile filename] [filename ...]
            -extract_packfile filename
+		   -update_str2 [str2 filename] [asm filename] [filename ...]
 </code></pre>
 
 Notes on vpkg commands:
@@ -22,5 +23,4 @@ Notes on vpkg commands:
 
 * output_dir is a global setting that affects the working directory for building and extracting asm, str2, and packfiles.  For example, when extracting a packfile, output\_dir will specify the output directory where the files within the packfile will be extracted.  When building a packfile, output\_dir specifies the directory where the built packfile will be placed.
 
-* If output\_dir is not specified, extracted files will be located in the current working directory.  
-
+* If output\_dir is not specified, extracted files will be located in the current working directory.
