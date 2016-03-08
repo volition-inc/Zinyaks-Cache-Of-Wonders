@@ -1,0 +1,276 @@
+<root>
+<Table>
+	<SimplificationCategory>
+		<Name>Buildings and Props Medium LOD</Name>
+		<LODLevel>1</LODLevel>
+		<p_percent>50</p_percent>
+		<p_weld_distance>10</p_weld_distance>
+		<p_area_weighted>True</p_area_weighted>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		<AssetType>Level Mesh</AssetType>
+		</SimplificationCategory>
+	<SimplificationCategory>
+		<Name>Buildings and Props Low LOD</Name>
+		<AssetType>Level Mesh</AssetType>
+		<LODLevel>2</LODLevel>
+		<p_percent>20</p_percent>
+		<p_weld_distance>20</p_weld_distance>
+		<p_area_weighted>True</p_area_weighted>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		</SimplificationCategory>
+	<SimplificationCategory>
+		<Name>Vehicles Medium LOD</Name>
+		<AssetType>Vehicle</AssetType>
+		<LODLevel>1</LODLevel>
+		<p_percent>30</p_percent>
+		<p_weld_distance>1</p_weld_distance>
+		<p_exhaustive_welding>False</p_exhaustive_welding>
+		<p_boundary_weight>8.0</p_boundary_weight>
+		<p_weight_boundary_faces>False</p_weight_boundary_faces>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		<p_divergent_texcoord_angle_threshold>-1</p_divergent_texcoord_angle_threshold>
+		</SimplificationCategory>
+	<SimplificationCategory>
+		<Name>Vehicles Low LOD</Name>
+		<AssetType>Vehicle</AssetType>
+		<LODLevel>2</LODLevel>
+		<p_percent>15</p_percent>
+		<p_weld_distance>10</p_weld_distance>
+		<p_exhaustive_welding>False</p_exhaustive_welding>
+		<p_boundary_weight>8.0</p_boundary_weight>
+		<p_weight_boundary_faces>False</p_weight_boundary_faces>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		<p_divergent_texcoord_angle_threshold>-1</p_divergent_texcoord_angle_threshold>
+		</SimplificationCategory>
+	<SimplificationCategory>
+		<Name>Characters Medium LOD</Name>
+		<AssetType>Character</AssetType>
+		<LODLevel>1</LODLevel>
+		<p_percent>30</p_percent>
+		<p_weld_distance>1</p_weld_distance>
+		<p_exhaustive_welding>False</p_exhaustive_welding>
+		<p_divergent_texcoord_angle_threshold>-1</p_divergent_texcoord_angle_threshold>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		<p_skinning_preservation_weight>0.1</p_skinning_preservation_weight>
+		</SimplificationCategory>
+	<SimplificationCategory>
+		<Name>Characters Low LOD</Name>
+		<AssetType>Character</AssetType>
+		<LODLevel>2</LODLevel>
+		<p_percent>10</p_percent>
+		<p_weld_distance>2</p_weld_distance>
+		<p_exhaustive_welding>False</p_exhaustive_welding>
+		<p_divergent_texcoord_angle_threshold>-1</p_divergent_texcoord_angle_threshold>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		<p_skinning_preservation_weight>0.1</p_skinning_preservation_weight>
+		</SimplificationCategory>
+	<SimplificationCategory>
+		<Name>Characters Extra Low LOD</Name>
+		<AssetType>Character</AssetType>
+		<LODLevel>3</LODLevel>
+		<p_percent>5</p_percent>
+		<p_weld_distance>2</p_weld_distance>
+		<p_exhaustive_welding>False</p_exhaustive_welding>
+		<p_divergent_texcoord_angle_threshold>-1</p_divergent_texcoord_angle_threshold>
+		<_Editor>
+			<Category>Entries</Category>
+			</_Editor>
+		<p_skinning_preservation_weight>0.1</p_skinning_preservation_weight>
+		</SimplificationCategory>
+	</Table>
+
+<TableTemplates>
+	</TableTemplates>
+
+<TableDescription>
+	<Name>SimplificationCategory</Name>
+	<Type>TableDescription</Type>
+	<Display_Name>Simplification Category</Display_Name>
+	<Element>
+		<Name>Name</Name>
+		<Type>String</Type>
+		</Element>
+	<Element>
+		<Name>AssetType</Name>
+		<Type>Selection</Type>
+		<Display_Name>Asset Type</Display_Name>
+		<Description>Specifies which type of asset this setting applies to (it is possible to add more asset types, but that requires code-side changes)</Description>
+		<Choice>Level Mesh</Choice>
+		<Choice>Vehicle</Choice>
+		<Choice>Character</Choice>
+		</Element>
+	<Element>
+		<Name>LODLevel</Name>
+		<Type>Int</Type>
+		<Display_Name>LOD Level</Display_Name>
+		<Description>LOD Level this category is intended to be used for.</Description>
+		<MinValue>0</MinValue>
+		</Element>
+	<Element>
+		<Name>p_percent</Name>
+		<Type>Float</Type>
+		<Display_Name>Target Percentage</Display_Name>
+		<Description>Only has an effect if target vert count is not set</Description>
+		<Required>false</Required>
+		<Default>100</Default>
+		<MinValue>0</MinValue>
+		<MaxValue>100</MaxValue>
+		</Element>
+	<Element>
+		<Name>p_target_vert_count</Name>
+		<Type>Int</Type>
+		<Display_Name>Target Vert Count</Display_Name>
+		<Description>Overrides target percentage</Description>
+		<Required>false</Required>
+		<MinValue>-1</MinValue>
+		</Element>
+	<Element>
+		<Name>p_weld_distance</Name>
+		<Type>Float</Type>
+		<Display_Name>Weld Distance (cm)</Display_Name>
+		<Description>Distance threshold to use when welding boundary verts prior to simplification. In centimeters.</Description>
+		<Required>false</Required>
+		<Default>0</Default>
+		<MinValue>0</MinValue>
+		</Element>
+	<Element>
+		<Name>p_exhaustive_welding</Name>
+		<Type>Selection</Type>
+		<Display_Name>Exhaustive Welding</Display_Name>
+		<Description>Run exhaustive boundary welding (may merge each boundary vert with more than one other vert, which can result in non-manifold edges)</Description>
+		<Required>false</Required>
+		<Default>True</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_boundary_weight</Name>
+		<Type>Float</Type>
+		<Display_Name>Boundary Weight</Display_Name>
+		<Description>Relative importance preserving of boundary (open) edges</Description>
+		<Required>false</Required>
+		<Default>2.0</Default>
+		</Element>
+	<Element>
+		<Name>p_uv_weight</Name>
+		<Type>Float</Type>
+		<Display_Name>UV Discontinuity Weight</Display_Name>
+		<Description>Relative importance of preserving UV (texcoord) discontinuties.</Description>
+		<Required>false</Required>
+		<Default>1.0</Default>
+		</Element>
+	<Element>
+		<Name>p_material_weight</Name>
+		<Type>Float</Type>
+		<Display_Name>Material Discontinuity Weight</Display_Name>
+		<Description>Relative importance of preserving material discontinuities.</Description>
+		<Required>false</Required>
+		<Default>2.0</Default>
+		</Element>
+	<Element>
+		<Name>p_sharp_edge_weight</Name>
+		<Type>Float</Type>
+		<Display_Name>Sharp Edge Weight</Display_Name>
+		<Description>Relative importance of preserving very sharp (dihedral angle greater than 90 degrees) edges</Description>
+		<Required>false</Required>
+		<Default>2.0</Default>
+		</Element>
+	<Element>
+		<Name>p_skinning_preservation_weight</Name>
+		<Type>Float</Type>
+		<Display_Name>Skinning Preservation Weight</Display_Name>
+		<Description>Relative importance of preserving "bendy" vertices on skinned models (vertices weighted by more than one bone)</Description>
+		<Required>false</Required>
+		<Default>0.0</Default>
+		<MinValue>0</MinValue>
+		</Element>
+	<Element>
+		<Name>p_preserve_topology</Name>
+		<Type>Selection</Type>
+		<Display_Name>Preserve Topology</Display_Name>
+		<Description>If set to true, simplifier will maintain genus of mesh, provided it is initially a manifold (you do not need to set this in most cases).</Description>
+		<Required>false</Required>
+		<Default>False</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_prevent_triangle_flipping</Name>
+		<Type>Selection</Type>
+		<Display_Name>Prevent Triangle Flipping</Display_Name>
+		<Description>When set, simplifier attempts to prevent triangles from flipping over and overlapping other triangles</Description>
+		<Required>false</Required>
+		<Default>True</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_lock_boundary</Name>
+		<Type>Selection</Type>
+		<Display_Name>Completely Lock Boundary</Display_Name>
+		<Description>When set, boundary verts will be preserved exactly (generally you should not use this, but instead set a high boundary weight)</Description>
+		<Required>false</Required>
+		<Default>False</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_subset_placement</Name>
+		<Type>Selection</Type>
+		<Display_Name>Vertices Subset Placement</Display_Name>
+		<Description>Only use existing vertex locations when simplifying (do not move any vertices)</Description>
+		<Required>false</Required>
+		<Default>False</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_area_weighted</Name>
+		<Type>Selection</Type>
+		<Display_Name>Use Area Weighted Error Metric</Display_Name>
+		<Description>Useful for models with highly varying triangle sizes (like buildings).</Description>
+		<Required>false</Required>
+		<Default>False</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_weight_boundary_faces</Name>
+		<Type>Selection</Type>
+		<Display_Name>Weight Boundary Faces</Display_Name>
+		<Description>Apply additional importance to faces along boundary edges, to discourage boundaries from moving "up and down"</Description>
+		<Required>false</Required>
+		<Default>True</Default>
+		<Choice>True</Choice>
+		<Choice>False</Choice>
+		</Element>
+	<Element>
+		<Name>p_divergent_texcoord_angle_threshold</Name>
+		<Type>Float</Type>
+		<Display_Name>Divergent UV Angle Threshold</Display_Name>
+		<Description>In degrees. Angle between UV gradients at which to treat the UV field as being "divergent." Set to -1 to disable.</Description>
+		<Required>false</Required>
+		<Default>45.0</Default>
+		<MinValue>-1</MinValue>
+		</Element>
+	<Single_Line_XML>False</Single_Line_XML>
+	</TableDescription>
+
+<EntryCategories>
+	<Category>
+		<Name>Entries</Name>
+		</Category>
+	</EntryCategories>
+</root>
