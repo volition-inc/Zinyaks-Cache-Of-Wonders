@@ -2729,7 +2729,7 @@ def get_node_properties( fbx_object, property_name = None, get_value = False ):
 
 	fbx_property = fbx_object.GetFirstProperty( )
 	while fbx_property.IsValid( ):
-		if fbx_property.GetFlag( FbxCommon.FbxPropertyAttr.eUserDefined ):
+		if fbx_property.GetFlag( FbxCommon.FbxPropertyFlags.eUserDefined ):
 			property_count += 1
 
 		fbx_property= fbx_object.GetNextProperty( fbx_property )
@@ -2742,7 +2742,7 @@ def get_node_properties( fbx_object, property_name = None, get_value = False ):
 	fbx_property = fbx_object.GetFirstProperty( )
 	i = 0
 	while fbx_property.IsValid( ):
-		if fbx_property.GetFlag( FbxCommon.FbxPropertyAttr.eUserDefined ):
+		if fbx_property.GetFlag( FbxCommon.FbxPropertyFlags.eUserDefined ):
 
 			if fbx_property.GetName( ) == property_name:
 				lPropertyDataType= fbx_property.GetPropertyDataType( )
@@ -4334,9 +4334,10 @@ class App_Frame( wx.Frame ):
 
 
 								texture_filename = None
-								num_textures = texture_property.GetSrcObjectCount( FbxCommon.FbxTexture.ClassId )
+								criteria = FbxCommon.FbxCriteria.ObjectType( FbxCommon.FbxTexture.ClassId )
+								num_textures = texture_property.GetSrcObjectCount( criteria )
 								for num in range( num_textures ):
-									cur_texture = texture_property.GetSrcObject( FbxCommon.FbxTexture.ClassId, num )
+									cur_texture = texture_property.GetSrcObject( criteria, num )
 									if cur_texture:
 										texture_filename =cur_texture.GetFileName( )
 
