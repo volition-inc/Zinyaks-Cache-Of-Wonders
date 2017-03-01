@@ -6,7 +6,7 @@ Import an FBX file
 -- Character Mesh ( *.cmeshx )
 -- Skeleton File  ( *.rigx )
 -- Material Library ( *.matlibx )
-Version - 1.05
+Version - 2.04
 Force 3dsmax Setting will take originating fbx files from 3dsmax, Exported from maya and convert without any user end rotation modifications.
 The main mesh must have a -90 degree rotation on the X axis
 """
@@ -25,8 +25,6 @@ import time
 import json
 import webbrowser
 import shutil
-import ctypes
-import ctypes.wintypes
 import copy
 
 import FbxCommon
@@ -59,16 +57,126 @@ MAYA_SCALE_VALUE = 100
 IN_TO_METERS = 0.0254
 CM_TO_METERS = 0.01
 
+TWO_UV_SETS= False #certain shaders need 2 uv sets. If this bool is true -> duplicate uv data
 IS_3DSMAX = False
 IS_MAYAYUP = False
 SCALE_VALUE = MAX_SCALE_VALUE
 SCENE_SCALE_CONVERSION = 0.01
 
-BLENDSHAPE_NAMES = { 'body_gender_female' : 'body gender female',
-                     'body_gender_male' : 'body gender male',
-                     'body_fat_plus' : 'body fat +',
-                     'body_fat_minus' : 'body fat -',
-                     'body_muscle' : 'body muscle' }
+BLENDSHAPE_NAMES = { "body_gender_female":"body gender female",
+                     "body_gender_male":"body gender male",
+                     "body_fat_plus":"body fat +",
+                     "body_fat_minus":"body fat -",
+                     "body_muscle":"body muscle",
+					 "skull_top_width_pm":"skull top width +-",
+					 "skull_top_elevation_pm":"skull top elevation +-",
+					 "skull_back_depth_pm":"skull back depth +-",
+					 "skull_back_width_pm":"skull back width +-",
+					 "neck_back_depth_pm":"neck back depth +-",
+					 "neck_back_width_pm":"neck back width +-",
+					 "forehead_depth_pm":"forehead depth +-",
+					 "forehead_elevation_pm":"forehead elevation +-",
+					 "forehead_width_pm":"forehead width +-",
+					 "brow_spacing_pm":"brow spacing +-",
+					 "brow_depth_pm":"brow depth +-",
+					 "brow_width_pm":"brow width +-",
+					 "inner_brow_elevation_pm":"inner brow elevation +-",
+					 "middle_brow_elevation_pm":"middle brow elevation +-",
+					 "outer_brow_elevation_pm":"outer brow elevation +-",
+					 "eyeballs_spacing_pm":"eyeballs spacing +-",
+					 "eyeballs_depth_pm":"eyeballs depth +-",
+					 "eyeballs_elevation_pm":"eyeballs elevation +-",
+					 "eyeballs_size_pm":"eyeballs size +-",
+					 "eye_folds_elevation_pm":"eye folds elevation +-",
+					 "upper_eyelids_pitch_minus":"upper eyelids pitch -",
+					 "upper_eyelids_pitch_plus":"upper eyelids pitch +",
+					 "upper_eyelids_roll_minus":"upper eyelids roll -",
+					 "upper_eyelids_roll_plus":"upper eyelids roll +",
+					 "lower_eyelids_pitch_minus":"lower eyelids pitch -",
+					 "lower_eyelids_pitch_plus":"lower eyelids pitch +",
+					 "lower_eyelids_roll_minus":"lower eyelids roll -",
+					 "lower_eyelids_roll_plus":"lower eyelids roll +",
+					 "iris_size_plus":"iris size +",
+					 "iris_size_minus":"iris size -",
+					 "eyeballs_spacing_minus":"eyeballs spacing -",
+					 "eye_style_minus":"eye style -",
+					 "eye_style_plus":"eye style +",
+					 "bridge_depth_pm":"bridge depth +-",
+					 "bridge_elevation_pm":"bridge elevation +-",
+					 "bridge_width_pm":"bridge width +-",
+					 "nose_depth_pm":"nose depth +-",
+					 "nose_elevation_pm":"nose elevation +-",
+					 "slope_depth_pm":"slope depth +-",
+					 "slope_elevation_pm":"slope elevation +-",
+					 "slope_width_pm":"slope width +-",
+					 "ball_depth_pm":"ball depth +-",
+					 "ball_elevation_pm":"ball elevation +-",
+					 "ball_width_pm":"ball width +-",
+					 "ball_height_pm":"ball height +-",
+					 "nostrils_spacing_pm":"nostrils spacing +-",
+					 "nostrils_depth_pm":"nostrils depth +-",
+					 "nostrils_elevation_pm":"nostrils elevation +-",
+					 "nostrils_width_pm":"nostrils width +-",
+					 "nostrils_height_pm":"nostrils height +-",
+					 "septum_elevation_pm":"septum elevation +-",
+					 "septum_width_pm":"septum width +-",
+					 "nose_size_pm":"nose size+-",
+					 "temples_spacing_pm":"temples spacing +-",
+					 "temples_depth_pm":"temples depth +-",
+					 "temples_elevation_pm":"temples elevation +-",
+					 "cheekbones_spacing_pm":"cheekbones spacing +-",
+					 "cheekbones_depth_pm":"cheekbones depth +-",
+					 "cheekbones_elevation_pm":"cheekbones elevation +-",
+					 "cheekbones_size_pm":"cheekbones size +-",
+					 "cheeks_spacing_pm":"cheeks spacing +-",
+					 "cheeks_depth_pm":"cheeks depth +-",
+					 "cheeks_elevation_pm":"cheeks elevation +-",
+					 "jowls_spacing_pm":"jowls spacing +-",
+					 "jowls_depth_pm":"jowls depth +-",
+					 "jowls_elevation_pm":"jowls elevation +-",
+					 "ears_spacing_pm":"ears spacing +-",
+					 "ears_depth_pm":"ears depth +-",
+					 "ears_elevation_pm":"ears elevation +-",
+					 "ears_width_pm":"ears width +-",
+					 "ears_length_pm":"ears length +-",
+					 "ears_height_pm":"ears height +-",
+					 "ears_pitch_minus":"ears pitch -",
+					 "ears_pitch_plus":"ears pitch +",
+					 "ears_yaw_minus":"ears yaw -",
+					 "ears_yaw_plus":"ears yaw +",
+					 "ears_roll_minus":"ears roll -",
+					 "ears_roll_plus":"ears roll +",
+					 "lobes_elevation_pm":"lobes elevation +-",
+					 "lobes_size_pm":"lobes size +-",
+					 "tips_spacing_pm":"tips spacing +-",
+					 "tips_elevation_pm":"tips elevation +-",
+					 "tips_size_pm":"tips size +-",
+					 "mouth_depth_pm":"mouth depth +-",
+					 "mouth_elevation_pm":"mouth elevation +-",
+					 "mouth_width_pm":"mouth width +-",
+					 "upper_lip_middle_elevation_pm":"upper lip middle elevation +-",
+					 "upper_lip_middle_size_pm":"upper lip middle size +-",
+					 "upper_lip_sides_elevation_pm":"upper lip sides elevation +-",
+					 "upper_lip_sides_size_pm":"upper lip sides size +-",
+					 "lower_lip_middle_elevation_pm":"lower lip middle elevation +-",
+					 "lower_lip_middle_size_pm":"lower lip middle size +-",
+					 "lower_lip_sides_elevation_pm":"lower lip sides elevation +-",
+					 "mouth_sides_depth_pm":"mouth sides depth +-",
+					 "mouth_sides_elevation_pm":"mouth sides elevation +-",
+					 "mouth_sides_size_pm":"mouth sides size +-",
+					 "mouth_bite_pm":"mouth bite +-",
+					 "mouth_size_pm":"mouth size+-",
+					 "chin_depth_pm":"chin depth +-",
+					 "chin_elevation_pm":"chin elevation +-",
+					 "chin_width_pm":"chin width +-",
+					 "chin_height_pm":"chin height +-",
+					 "double_chin_depth_pm":"double chin depth +-",
+					 "double_chin_elevation_pm":"double chin elevation +-",
+					 "double_chin_width_pm":"double chin width +-",
+					 "chin_dimple":"chin dimple",
+					 "jaw_spacing_pm":"jaw spacing +-",
+					 "jaw_depth_pm":"jaw depth +-",
+					 "jaw_elevation_pm":"jaw elevation +-"}
 
 # Bone Name Mappings
 BONE_NAMES = { 'bone_l_thigh' : 'bone_l-thigh',
@@ -129,8 +237,8 @@ BONE_NAMES = { 'bone_l_thigh' : 'bone_l-thigh',
 # Material String Dictionaries
 MATERIAL_TAGS = { 'Diffuse_Map_varList' : 'diffuse_map',
                   'Diffuse_Map' : 'diffuse_map',
-                  'Pattern_Map_varList' : 'diffuse_map',
-                  'pattern_map' : 'diffuse_map',
+                  'Pattern_Map_varList' : 'pattern_map',
+				  'pattern_map' : 'pattern_map',
                   'Normal_Map_varList' : 'normal_map',
                   'Normal_Map' : 'normal_map',
                   'Normal_Map_Height' : 'normal_map_height',
@@ -164,6 +272,20 @@ MATERIAL_TAGS = { 'Diffuse_Map_varList' : 'diffuse_map',
                   'Self_Illumination' : 'self_illumination',
                   'glow_Mask_Map' : 'glow_Mask_Map',
                   }
+
+
+def proc_call( args, **kwargs ):
+	if os.name == "nt":
+		return subprocess.call( args, **kwargs )
+	else:
+		return subprocess.call( [ "wine" ] + args, **kwargs )
+
+
+def proc_check_call( args, **kwargs ):
+	if os.name == "nt":
+		return subprocess.check_call( args, **kwargs )
+	else:
+		return subprocess.check_call( [ "wine" ] + args, **kwargs )
 
 
 class Node_Bone( object ):
@@ -427,8 +549,8 @@ class Material_Info( object ):
 		self.normal_map_height = 1.000000
 		self.specular_map = os.path.join( WORKING_DIR, 'spec_blank_s.tga' )
 		self.specular_map_amount = 1.000000
-		self.specular_power = 60.000000
-		self.specular_power2 = 60.000000
+		self.specular_power = 1.000000
+		self.specular_power2 = 1.000000
 		self.specular_alpha = 0.000000
 		self.specular_alpha2 = 0.000000
 		self.specular_alpha_interface = 1.000000
@@ -450,58 +572,6 @@ class Material_Info( object ):
 		self.glow_Mask_Map = os.path.join( WORKING_DIR, 'missing.tga' )
 		self.xml_element = None
 		self.pattern_map = os.path.join( WORKING_DIR, 'missing-black.tga' )
-
-
-def get_process( process_name ):
-
-	ps_api = ctypes.WinDLL( 'Psapi.dll' )
-
-	ps_api.EnumProcesses.restype = ctypes.wintypes.BOOL
-	ps_api.GetProcessImageFileNameA.restype = ctypes.wintypes.DWORD
-
-	kernel32 = ctypes.WinDLL( 'kernel32.dll' )
-
-	kernel32.OpenProcess.restype = ctypes.wintypes.HANDLE
-	kernel32.TerminateProcess.restype = ctypes.wintypes.BOOL
-
-	MAX_PATH = 260
-	PROCESS_TERMINATE = 0x0001
-	PROCESS_QUERY_INFORMATION = 0x0400
-
-	count = 32
-
-	process_count = 0
-
-	while True:
-		process_ids = ( ctypes.wintypes.DWORD * count )( )
-		cb = ctypes.sizeof( process_ids )
-		bytes_returned = ctypes.wintypes.DWORD( )
-
-		if ps_api.EnumProcesses( ctypes.byref( process_ids ), cb, ctypes.byref( bytes_returned ) ):
-			if bytes_returned.value < cb:
-				break
-
-			else:
-				count *= 2
-		else:
-			raise IOError( 'Call to EnumProcesses failed' )
-
-
-	for index in range( bytes_returned.value / ctypes.sizeof( ctypes.wintypes.DWORD ) ):
-		process_id = process_ids[ index ]
-		h_process = kernel32.OpenProcess( PROCESS_QUERY_INFORMATION, False, process_id )
-		if h_process:
-			image_filename = ( ctypes.c_char*MAX_PATH )( )
-
-			if ps_api.GetProcessImageFileNameA( h_process, image_filename, MAX_PATH ) > 0:
-				filename = os.path.basename( image_filename.value ).lower( )
-
-				if filename == process_name:
-					process_count += 1
-
-			kernel32.CloseHandle( h_process )
-
-	return process_count
 
 
 def package_files( converted_folder, output_folder ):
@@ -599,19 +669,21 @@ def package_files( converted_folder, output_folder ):
 		for asm_file in asm_files:
 
 			command_index += 1
-			cmd = 'vpkg_wd -output_dir "{0}" -update_str2 "{1}" "{2}" "{3}\*"'.format( output_folder, str2_file, asm_file, converted_folder )
-			output_cmds.append( cmd )
+			cmd = [ "vpkg_wd.exe", "-output_dir", output_folder, "-update_str2",
+				str2_file, asm_file, os.path.join( converted_folder, "*" )]
+			cmd_str = " ".join( cmd )
+			output_cmds.append( cmd_str )
 			print cmd
 
 			try:
-				subprocess.check_call( cmd, shell = False, stderr = subprocess.STDOUT)
+				proc_check_call( cmd, stderr = subprocess.STDOUT)
 			except subprocess.CalledProcessError as error:
 				code = error.returncode
 				command_failed.append( command_index )
 				if code in ( 1, 2 ):
-					print 'The command failed\n  {0}'.format( cmd )
+					print 'The command failed\n  {0}'.format( cmd_str )
 				elif code in ( 3, 4, 5 ):
-					print 'The command had some issues\n  {0}'.format( cmd )
+					print 'The command had some issues\n  {0}'.format( cmd_str )
 
 			finally:
 				processed = True
@@ -676,13 +748,18 @@ def crunch_rule( filename, ):
 						copied_cruncher_file = cruncher_file
 						if os.path.lexists( cruncher_file ):
 							if base_filename.startswith( MESH_CRUNCHER ) or base_filename.startswith( MAT_CRUNCHER ):
-								print '{0} -p {1} {2}'.format( copied_cruncher_file, shaders_file, filename )
-								subprocess.Popen( '"{0}" -p "{1}" "{2}"'.format( copied_cruncher_file, shaders_file, filename ) )
+								print copied_cruncher_file, "-p", shaders_file, filename
+								retval = proc_call( [copied_cruncher_file, "-p", shaders_file, filename] )
 							else:
-								subprocess.Popen( '"{0}" "{1}"'.format( copied_cruncher_file, filename ) )
+								print copied_cruncher_file, filename
+								retval = proc_call( [copied_cruncher_file, filename] )
 
 							# remove the file
 							#os.remove( copied_cruncher_file )
+							if retval != 0:
+								print 'ERROR: Crunch failed.\n{0}'.format( cruncher_file )
+								return False
+
 							return True
 
 						else:
@@ -803,7 +880,7 @@ def write_crunch_rule( filename, resource_type, textures = None ):
 		                '.peg' : [ '.cpeg_', '.gpeg_' ],
 		                '.texture' : [ '.cvbm_', '.gvbm_', '.acl_' ],
 		                '.smeshx' : [ '.csmesh_', '.gsmesh_' ],
-	                   '.morphx' : [ '.cmorph_', '.gmorph_' ] }
+	                   '.morphx' : [ '.cmorph_' ] }
 
 	crunch_names = { '.rigx' : 'rig_cruncher_wd_',
 		              '.cmeshx' : 'mesh_crunch_wd_',
@@ -1073,9 +1150,46 @@ def write_cmeshx( filename, mesh, mesh_name, face_data, vertices, bone_order, ta
 		* Randall Hess,   11/19/2013 8:46:57 PM
 	"""
 
+	global TWO_UV_SETS
+	TWO_UV_SETS= False
+
 	with open( filename, 'w' ) as cmeshx_file:
 
 		debug_output = False
+
+		# **************************************************************
+		# Order (and count) the Verts
+		vert_index = 0
+		vert_indices = [ ]
+		ordered_verts = [ ]
+		for face in face_data:
+			vert_idx = 0
+			for vert_data in face.verts:
+				# make sure we haven't already written this vertex index
+				if not vert_data.index in vert_indices:
+					face.indices[ vert_idx ] = vert_index
+					vert_indices.append( vert_data.index )
+					vert = vert_data.positions
+
+					# update the indicie for the morph targets
+					ordered_vert_data = copy.deepcopy( vert_data )
+					ordered_vert_data.index = vert_index
+					ordered_vert_data.original_index = vert_data.index
+					ordered_verts.append( ordered_vert_data )
+
+					if DEBUG_OUTPUT:
+						cmeshx_file.write( '\t\t\t\tIndex: {0} Vert: {1}\n'.format( vert_index, vert_data.index ) )
+						cmeshx_file.write( '\t\t\t\t{0}         {1}        {2}\n'.format( round( -vert[0], 5 ),  round( vert[2], 5 ), round( -vert[1], 5 ) ) )
+
+					vert_index += 1
+
+				else:
+					face.indices[ vert_idx ] = vert_indices.index( vert_data.index )
+
+				vert_idx += 1
+
+			if DEBUG_OUTPUT:
+				print '\tFace: {0} Indices: {1}'.format( face.index, face.indices )
 
 		# write header
 		cmeshx_file.write( '<root>\n' )
@@ -1139,7 +1253,7 @@ def write_cmeshx( filename, mesh, mesh_name, face_data, vertices, bone_order, ta
 		cmeshx_file.write( '\t\t<mesh>\n' )
 		cmeshx_file.write( '\t\t\t<name>{0}</name>\n'.format( mesh_name ) )
 		cmeshx_file.write( '\t\t\t<parentname>{0}</parentname>\n'.format( 'none' ) )
-		cmeshx_file.write( '\t\t\t<numverts>{0}</numverts>\n'.format( len( vertices ) ) )
+		cmeshx_file.write( '\t\t\t<numverts>{0}</numverts>\n'.format( len( ordered_verts ) ) )
 		cmeshx_file.write( '\t\t\t<numfaces>{0}</numfaces>\n'.format( len( face_data ) ) )
 
 		# Materials
@@ -1161,45 +1275,16 @@ def write_cmeshx( filename, mesh, mesh_name, face_data, vertices, bone_order, ta
 
 
 		# write the verts
-		vert_index = 0
-		vert_indices = [ ]
-		ordered_verts = [ ]
-		for face in face_data:
-			vert_idx = 0
-			for vert_data in face.verts:
-				# make sure we haven't already written this vertex index
-				if not vert_data.index in vert_indices:
-					face.indices[ vert_idx ] = vert_index
-					vert_indices.append( vert_data.index )
-					vert = vert_data.positions
+		for vert_data in ordered_verts:
+			vert = vert_data.positions
 
-					# update the indicie for the morph targets
-					ordered_vert_data = copy.deepcopy( vert_data )
-					ordered_vert_data.index = vert_index
-					ordered_vert_data.original_index = vert_data.index
-					ordered_verts.append( ordered_vert_data )
+			# convert the vertex floats into hex
+			vert_x = get_float_as_hex( -vert[ 0 ] )
+			vert_y = get_float_as_hex( vert[ 2 ] )
+			vert_z = get_float_as_hex( -vert[ 1 ] )
 
-					if DEBUG_OUTPUT:
-						cmeshx_file.write( '\t\t\t\tIndex: {0} Vert: {1}\n'.format( vert_index, vert_data.index ) )
-						cmeshx_file.write( '\t\t\t\t{0}         {1}        {2}\n'.format( round( -vert[0], 5 ),  round( vert[2], 5 ), round( -vert[1], 5 ) ) )
-
-					# convert the vertex floats into hex
-					vert_x = get_float_as_hex( -vert[ 0 ] )
-					vert_y = get_float_as_hex( vert[ 2 ] )
-					vert_z = get_float_as_hex( -vert[ 1 ] )
-
-					# write out the converted vertex
-					cmeshx_file.write( '\t\t\t\t<v>{0} {1} {2}</v>\n'.format( vert_x, vert_y, vert_z ) )
-
-					vert_index += 1
-
-				else:
-					face.indices[ vert_idx ] = vert_indices.index( vert_data.index )
-
-				vert_idx += 1
-
-			if DEBUG_OUTPUT:
-				print '\tFace: {0} Indices: {1}'.format( face.index, face.indices )
+			# write out the converted vertex
+			cmeshx_file.write( '\t\t\t\t<v>{0} {1} {2}</v>\n'.format( vert_x, vert_y, vert_z ) )
 
 		cmeshx_file.write( '\t\t\t</verts>\n' )
 
@@ -1239,51 +1324,51 @@ def write_cmeshx( filename, mesh, mesh_name, face_data, vertices, bone_order, ta
 			#cmeshx_file.write( '\t\t\t\t<f>{0} {1} {2} {3}</f>\n'.format( face.indices[1], face.indices[0], face.indices[2], face.material_id ) )
 		cmeshx_file.write( '\t\t\t</faces>\n' )
 
+		for repetition in range (0,int(TWO_UV_SETS)+1): #If TWO_UV_SETS == True -> duplicate uv data (would be better to write out an actual second uv set)
+			# **************************************************************
+			# FaceUvs
+			cmeshx_file.write( '\t\t\t<faceuvs>\n' )
+			cmeshx_file.write( '\t\t\t<hex>1</hex>\n' )
 
-		# **************************************************************
-		# FaceUvs
-		cmeshx_file.write( '\t\t\t<faceuvs>\n' )
-		cmeshx_file.write( '\t\t\t<hex>1</hex>\n' )
+			for face in face_data:
 
-		for face in face_data:
+				# build up the uv list for the current face, u and v for each face vertex
+				corner_index = 0
+				corner_uvs = [ 0, 0, 0, 0, 0, 0 ]
+				corner_floats = [ 0, 0, 0, 0, 0, 0 ]
 
-			# build up the uv list for the current face, u and v for each face vertex
-			corner_index = 0
-			corner_uvs = [ 0, 0, 0, 0, 0, 0 ]
-			corner_floats = [ 0, 0, 0, 0, 0, 0 ]
+				for vert_data in face.verts:
+					uv = vert_data.uvs
 
-			for vert_data in face.verts:
-				uv = vert_data.uvs
+					if DEBUG_OUTPUT:
+						print 'face index: {0}, vert: {1} uvs: {2}'.format( face.index, vert_data.index, uv )
+
+					# store off the float values to print if debugging
+					corner_floats[ corner_index ] = round( uv[0], 5 )
+					corner_floats[ corner_index + 1 ] = round( uv[1], 5 )
+
+					# convert uv values to hex
+					uv_x = get_float_as_hex( uv[ 0 ] )
+					uv_y = get_float_as_hex( uv[ 1 ] )
+
+					# update the corner uv list with the proper indices
+					corner_uvs[ corner_index ] = uv_x
+					corner_uvs[ corner_index + 1 ] = uv_y
+					corner_index += 2
 
 				if DEBUG_OUTPUT:
-					print 'face index: {0}, vert: {1} uvs: {2}'.format( face.index, vert_data.index, uv )
+					cmeshx_file.write( '\t\t\t\t{0}\t\t{1}\n'.format( round( corner_floats[0], 5 ), round(  corner_floats[1], 5 ) ) )
+					cmeshx_file.write( '\t\t\t\t{0}\t\t{1}\n'.format( round( corner_floats[4], 5 ), round(  corner_floats[5], 5 ) ) )
+					cmeshx_file.write( '\t\t\t\t{0}\t\t{1}\n'.format( round( corner_floats[2], 5 ), round(  corner_floats[3], 5 ) ) )
 
-				# store off the float values to print if debugging
-				corner_floats[ corner_index ] = round( uv[0], 5 )
-				corner_floats[ corner_index + 1 ] = round( uv[1], 5 )
-
-				# convert uv values to hex
-				uv_x = get_float_as_hex( uv[ 0 ] )
-				uv_y = get_float_as_hex( uv[ 1 ] )
-
-				# update the corner uv list with the proper indices
-				corner_uvs[ corner_index ] = uv_x
-				corner_uvs[ corner_index + 1 ] = uv_y
-				corner_index += 2
-
-			if DEBUG_OUTPUT:
-				cmeshx_file.write( '\t\t\t\t{0}\t\t{1}\n'.format( round( corner_floats[0], 5 ), round(  corner_floats[1], 5 ) ) )
-				cmeshx_file.write( '\t\t\t\t{0}\t\t{1}\n'.format( round( corner_floats[4], 5 ), round(  corner_floats[5], 5 ) ) )
-				cmeshx_file.write( '\t\t\t\t{0}\t\t{1}\n'.format( round( corner_floats[2], 5 ), round(  corner_floats[3], 5 ) ) )
-
-			cmeshx_file.write( '\t\t\t\t<uv>{0} {1} {2} {3} {4} {5}</uv>\n'.format( corner_uvs[0], corner_uvs[1], corner_uvs[4], corner_uvs[5], corner_uvs[2], corner_uvs[3], face.index ) )
-		cmeshx_file.write( '\t\t\t</faceuvs>\n' )
+				cmeshx_file.write( '\t\t\t\t<uv>{0} {1} {2} {3} {4} {5}</uv>\n'.format( corner_uvs[0], corner_uvs[1], corner_uvs[4], corner_uvs[5], corner_uvs[2], corner_uvs[3], face.index ) )
+			cmeshx_file.write( '\t\t\t</faceuvs>\n' )
 
 		if not static_mesh:
 			# **************************************************************
 			# Vertex Weights
 			cmeshx_file.write( '\t\t\t<vertexweights>\n' )
-			cmeshx_file.write( '\t\t\t\t<numvweights>{0}</numvweights>\n'.format( len( vertices ) ) )
+			cmeshx_file.write( '\t\t\t\t<numvweights>{0}</numvweights>\n'.format( len( ordered_verts ) ) )
 			cmeshx_file.write( '\t\t\t\t<vweights>\n' )
 
 
@@ -1304,6 +1389,8 @@ def write_cmeshx( filename, mesh, mesh_name, face_data, vertices, bone_order, ta
 						weight_info = bone_weights[ vert_data.index ]
 						if weight_info:
 
+							sorted_weight_info = sorted(weight_info.items( ), key=lambda x: -x[1])
+
 							if DEBUG_VERTS:
 								print 'Bone Weight: {2} VertIndex:{0} OriginalIndex:{1}'.format( vert_data.index, vert_data.original_index, weight_info )
 
@@ -1312,7 +1399,11 @@ def write_cmeshx( filename, mesh, mesh_name, face_data, vertices, bone_order, ta
 							weight_values = [ 0, -1, 0, -1, 0, -1, 0, -1 ]
 
 							index = 0
-							for bone, weight in weight_info.iteritems( ):
+							for bone, weight in sorted_weight_info:
+								if index >= 8:
+									print "Warning: vert {0} has too many weights.".format( vert_data.original_index )
+									break
+
 								# get the bone_index
 								bone_index = bones[ bone ]
 
@@ -1558,6 +1649,9 @@ def write_material( file_, material, tabs = '\t\t\t\t\t' ):
 				if element_value.endswith( '.tga' ):
 					if os.path.dirname( element_value ):
 						element_value = os.path.basename( element_value )
+			if str(element_value) == 'ir_sr3pccloth' or str(element_value) == 'ir_sr3npcclothfull' or str(element_value) == 'ir_sr3npcclothPulse': #These shaders require two UV sets
+				global TWO_UV_SETS
+				TWO_UV_SETS= True
 			file_.write( '{0}<{1}>{2}</{1}>\n'.format( tabs, element.tag, element_value ) )
 	else:
 		wx.MessageBox( ' Material is missing an assigned shader!\nMaterial: ' + material.name , style = wx.OK, caption = 'Volition FBX Converter' )
@@ -2318,9 +2412,11 @@ def load_fbx_scene( fbx_scene, do_3dsmax, do_Maya ):
 
 
 
+		global IS_MAYAYUP
+		global IS_3DSMAX
+
 		#REPLACING THIS CHECK NOW THAT WE ARE CONVERTING TO MAX Axis
 		if fbx_scene_axis == FbxCommon.FbxAxisSystem.MayaYUp:
-			global IS_MAYAYUP
 			IS_MAYAYUP = True
 
 			# construct the axis
@@ -2335,7 +2431,6 @@ def load_fbx_scene( fbx_scene, do_3dsmax, do_Maya ):
 			coordinate_system_transform.SetColumn( 3, FbxCommon.FbxVector4( ) )	#Position
 
 		elif fbx_scene_axis == FbxCommon.FbxAxisSystem.Max:
-			global IS_3DSMAX
 			IS_3DSMAX = True
 
 			# create the coord sys transform
@@ -2345,10 +2440,7 @@ def load_fbx_scene( fbx_scene, do_3dsmax, do_Maya ):
 			coordinate_system_transform.SetColumn( 3, FbxCommon.FbxVector4( ) )	#Position
 
 		if do_3dsmax:
-			global IS_MAYAYUP
 			IS_MAYAYUP = False
-
-			global IS_3DSMAX
 			IS_3DSMAX = True
 
 			right_vector.Set( 1.0, 0.0, 0.0, 0.0)
@@ -2598,7 +2690,7 @@ def get_node_properties( fbx_object, property_name = None, get_value = False ):
 
 	fbx_property = fbx_object.GetFirstProperty( )
 	while fbx_property.IsValid( ):
-		if fbx_property.GetFlag( FbxCommon.FbxPropertyAttr.eUserDefined ):
+		if fbx_property.GetFlag( FbxCommon.FbxPropertyFlags.eUserDefined ):
 			property_count += 1
 
 		fbx_property= fbx_object.GetNextProperty( fbx_property )
@@ -2611,7 +2703,7 @@ def get_node_properties( fbx_object, property_name = None, get_value = False ):
 	fbx_property = fbx_object.GetFirstProperty( )
 	i = 0
 	while fbx_property.IsValid( ):
-		if fbx_property.GetFlag( FbxCommon.FbxPropertyAttr.eUserDefined ):
+		if fbx_property.GetFlag( FbxCommon.FbxPropertyFlags.eUserDefined ):
 
 			if fbx_property.GetName( ) == property_name:
 				lPropertyDataType= fbx_property.GetPropertyDataType( )
@@ -3069,7 +3161,7 @@ class App_Frame( wx.Frame ):
 		* Randall Hess, , 1/2/2014 2:59:47 PM
 	"""
 
-	def __init__( self, parent, ID, title='Saints Row FBX Converter - v1.05' ):
+	def __init__( self, parent, ID, title='Saints Row FBX Converter - v2.04' ):
 		wx.Frame.__init__(self, parent, ID, title, wx.DefaultPosition, wx.Size( 422, 800 ), style = wx.DEFAULT_DIALOG_STYLE | wx.CLIP_CHILDREN | wx.NO_FULL_REPAINT_ON_RESIZE )
 		#self.SetBackgroundColour((86,54,169))
 		#self.SetBackgroundColour((210,184,134))
@@ -3303,8 +3395,8 @@ class App_Frame( wx.Frame ):
 		package_hsizer1 = wx.BoxSizer( wx.HORIZONTAL )
 		package_hsizer2 = wx.BoxSizer( wx.HORIZONTAL )
 
-		self.package_folder_button = wx.Button( self, 3, 'Folder', size = ( 50, 20), style = 2)
-		self.package_text = wx.TextCtrl( self, -1, "...", size = ( 310, 21 ), style=wx.TE_READONLY  )
+		self.package_folder_button = wx.Button( self, 3, 'Folder', size = ( 50, 20 ) )
+		self.package_text = wx.TextCtrl( self, -1, "...", size = ( 310, 21 ) ) #style=wx.TE_READONLY
 		self.package_text.SetBackgroundColour((210,184,134))
 		self.package_folder_button.Bind( wx.EVT_BUTTON, self.on_set_game_folder )
 
@@ -3321,7 +3413,7 @@ class App_Frame( wx.Frame ):
 		package_hsizer1.Add( self.package_text, 0 )
 		package_hsizer1.AddSpacer( 5 )
 
-		self.rig_button = wx.ToggleButton( self, 3,'Rigx ', size = ( 50, 20 ), style=2 )
+		self.rig_button = wx.ToggleButton( self, 3,'Rigx ', size = ( 50, 20 ) )
 		#self.rig_button.SetForegroundColour((210,184,134))
 		self.rig_text = wx.TextCtrl( self, -1, "*.rigx", size = ( 310, 21 ), ) # style=wx.TE_READONLY  )
 		self.rig_text.SetBackgroundColour((210,184,134))
@@ -3332,7 +3424,7 @@ class App_Frame( wx.Frame ):
 		export_hsizer1.Add( self.rig_text, 0 )
 		export_hsizer1.AddSpacer( 5 )
 
-		self.cmesh_button = wx.ToggleButton( self, 3,'Cmeshx ', size = ( 50, 20 ), style=0 )
+		self.cmesh_button = wx.ToggleButton( self, 3,'Cmeshx ', size = ( 50, 20 ) )
 		self.cmesh_text = wx.TextCtrl( self, -1, "*.cmeshx", size = ( 310, 21 ), ) #style=wx.TE_READONLY  )
 		self.cmesh_text.SetBackgroundColour((210,184,134))
 		self.cmesh_text.Bind( wx.EVT_TEXT, self.on_set_mesh_text )
@@ -3343,7 +3435,7 @@ class App_Frame( wx.Frame ):
 		export_hsizer2.Add( self.cmesh_text, 0 )
 		export_hsizer2.AddSpacer( 5 )
 
-		self.matlib_button = wx.ToggleButton( self, 3,'Matlibx ', size = ( 50, 20 ), style=1 )
+		self.matlib_button = wx.ToggleButton( self, 3,'Matlibx ', size = ( 50, 20 ) )
 		self.matlib_text = wx.TextCtrl( self, -1, "*.matlibx", size = ( 310, 21 ), ) # style=wx.TE_READONLY  )
 		self.matlib_text.SetBackgroundColour((210,184,134))
 		self.matlib_text.Bind( wx.EVT_TEXT, self.on_set_mat_text )
@@ -3353,7 +3445,7 @@ class App_Frame( wx.Frame ):
 		export_hsizer3.Add( self.matlib_text, 0 )
 		export_hsizer3.AddSpacer( 5 )
 
-		self.morph_button = wx.ToggleButton( self, 3,'Morphx ', size = ( 50, 20 ), style=1 )
+		self.morph_button = wx.ToggleButton( self, 3,'Morphx ', size = ( 50, 20 ) )
 		self.morph_text = wx.TextCtrl( self, -1, "*.morphx", size = ( 310, 21 ), ) # style=wx.TE_READONLY  )
 		self.morph_text.SetBackgroundColour((210,184,134))
 		self.morph_text.Bind( wx.EVT_TEXT, self.on_set_mat_text )
@@ -3817,7 +3909,7 @@ class App_Frame( wx.Frame ):
 					time.sleep( total_time )
 
 					# delete temp crunched texture files
-					intermediate_names = [ '.cmeshx', '.rigx', '.smeshx', '.matlibx' ]
+					intermediate_names = [ '.cmeshx', '.rigx', '.smeshx', '.matlibx', '.morphx' ]
 					local_dir = os.path.dirname( self.fbx_file )
 					if os.path.lexists( local_dir ):
 						files = os.listdir( local_dir )
@@ -3839,6 +3931,9 @@ class App_Frame( wx.Frame ):
 							if files:
 								for afile in files:
 									if afile.endswith( '.log' ):
+										print '\tRemoving temp file: {0}'.format( afile )
+										os.remove( os.path.join( output_dir, afile ) )
+									elif afile.endswith('.morph_key_pc'):
 										print '\tRemoving temp file: {0}'.format( afile )
 										os.remove( os.path.join( output_dir, afile ) )
 
@@ -4025,7 +4120,6 @@ class App_Frame( wx.Frame ):
 		open_dialog.Destroy()
 
 		if fbx_file:
-
 			# update the config file
 			self.last_dir = os.path.dirname( fbx_file )
 			self.save_settings( )
@@ -4165,6 +4259,9 @@ class App_Frame( wx.Frame ):
 					self.smeshx_files.append( None )
 					self.morphx_files.append( None )
 
+				debugFile = open('textureDebugFile.txt', 'w') #creates a text file to show which texture slots are used by the material
+				debugFile.close()
+
 				# get the materials
 				for mesh in self.meshes:
 					lmesh = mesh.GetNodeAttribute( )
@@ -4192,19 +4289,34 @@ class App_Frame( wx.Frame ):
 								if DEBUG_OUTPUT:
 									print 'Material: {0} Texture property: {1}'.format( material.GetName(), texture_prop_name )
 
+								debugFile = open('textureDebugFile.txt', 'a')
+								someDebugString = str(texture_prop_name)
+								debugFile.write('-'+someDebugString)
+
+
 								texture_filename = None
-								num_textures = texture_property.GetSrcObjectCount( FbxCommon.FbxTexture.ClassId )
+								criteria = FbxCommon.FbxCriteria.ObjectType( FbxCommon.FbxTexture.ClassId )
+								num_textures = texture_property.GetSrcObjectCount( criteria )
 								for num in range( num_textures ):
-									cur_texture = texture_property.GetSrcObject( FbxCommon.FbxTexture.ClassId, num )
+									cur_texture = texture_property.GetSrcObject( criteria, num )
 									if cur_texture:
 										texture_filename =cur_texture.GetFileName( )
+
+										someDebugString = ': '+str(texture_filename)
+										debugFile.write(someDebugString)
+
 										if DEBUG_OUTPUT:
 											print '\t2) lTexture: {0} FileName: {1}'.format( cur_texture.GetName(), cur_texture.GetFileName( ) )
+
+								debugFile.write('\n')
+								debugFile.close()
 
 								# fill out the material property/ texture file references
 								if texture_filename:
 									if texture_prop_name == 'DiffuseColor':
 										new_mat.diffuse_map = texture_filename
+									elif texture_prop_name == 'DiffuseFactor':
+										new_mat.pattern_map = texture_filename
 									elif texture_prop_name == 'SpecularColor':
 										new_mat.specular_map = texture_filename
 									elif texture_prop_name == 'NormalMap':
@@ -4213,7 +4325,7 @@ class App_Frame( wx.Frame ):
 										new_mat.normal_map = texture_filename
 									elif texture_prop_name == 'AmbientColor':
 										new_mat.sphere_map1 = texture_filename
-									elif texture_prop_name == 'DisplacementColor':
+									elif texture_prop_name == 'ReflectionColor':
 										new_mat.sphere_map2 = texture_filename
 									elif texture_prop_name == 'TransparentColor':
 										new_mat.blend_map = texture_filename
@@ -4928,7 +5040,7 @@ class App_Frame( wx.Frame ):
 					if self.game_folder:
 						if os.path.lexists( self.game_folder ):
 							self.package_text.Enable( True )
-							self.package_text.SetLabelText( self.game_folder )
+							self.package_text.SetValue( self.game_folder )
 							self.package_button.Enable( True )
 
 		self.Layout( )
