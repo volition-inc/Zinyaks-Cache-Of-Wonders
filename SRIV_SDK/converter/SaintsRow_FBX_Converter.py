@@ -25,8 +25,6 @@ import time
 import json
 import webbrowser
 import shutil
-import ctypes
-import ctypes.wintypes
 import copy
 
 import FbxCommon
@@ -274,6 +272,20 @@ MATERIAL_TAGS = { 'Diffuse_Map_varList' : 'diffuse_map',
                   'Self_Illumination' : 'self_illumination',
                   'glow_Mask_Map' : 'glow_Mask_Map',
                   }
+
+
+def proc_call( args, **kwargs ):
+	if os.name == "nt":
+		return subprocess.call( args, **kwargs )
+	else:
+		return subprocess.call( [ "wine" ] + args, **kwargs )
+
+
+def proc_check_call( args, **kwargs ):
+	if os.name == "nt":
+		return subprocess.check_call( args, **kwargs )
+	else:
+		return subprocess.check_call( [ "wine" ] + args, **kwargs )
 
 
 class Node_Bone( object ):
@@ -562,58 +574,6 @@ class Material_Info( object ):
 		self.pattern_map = os.path.join( WORKING_DIR, 'missing-black.tga' )
 
 
-def get_process( process_name ):
-
-	ps_api = ctypes.WinDLL( 'Psapi.dll' )
-
-	ps_api.EnumProcesses.restype = ctypes.wintypes.BOOL
-	ps_api.GetProcessImageFileNameA.restype = ctypes.wintypes.DWORD
-
-	kernel32 = ctypes.WinDLL( 'kernel32.dll' )
-
-	kernel32.OpenProcess.restype = ctypes.wintypes.HANDLE
-	kernel32.TerminateProcess.restype = ctypes.wintypes.BOOL
-
-	MAX_PATH = 260
-	PROCESS_TERMINATE = 0x0001
-	PROCESS_QUERY_INFORMATION = 0x0400
-
-	count = 32
-
-	process_count = 0
-
-	while True:
-		process_ids = ( ctypes.wintypes.DWORD * count )( )
-		cb = ctypes.sizeof( process_ids )
-		bytes_returned = ctypes.wintypes.DWORD( )
-
-		if ps_api.EnumProcesses( ctypes.byref( process_ids ), cb, ctypes.byref( bytes_returned ) ):
-			if bytes_returned.value < cb:
-				break
-
-			else:
-				count *= 2
-		else:
-			raise IOError( 'Call to EnumProcesses failed' )
-
-
-	for index in range( bytes_returned.value / ctypes.sizeof( ctypes.wintypes.DWORD ) ):
-		process_id = process_ids[ index ]
-		h_process = kernel32.OpenProcess( PROCESS_QUERY_INFORMATION, False, process_id )
-		if h_process:
-			image_filename = ( ctypes.c_char*MAX_PATH )( )
-
-			if ps_api.GetProcessImageFileNameA( h_process, image_filename, MAX_PATH ) > 0:
-				filename = os.path.basename( image_filename.value ).lower( )
-
-				if filename == process_name:
-					process_count += 1
-
-			kernel32.CloseHandle( h_process )
-
-	return process_count
-
-
 def package_files( converted_folder, output_folder ):
 	"""
 	Package the output files into str2_pc and asm_pc packages
@@ -709,19 +669,21 @@ def package_files( converted_folder, output_folder ):
 		for asm_file in asm_files:
 
 			command_index += 1
-			cmd = 'vpkg_wd -output_dir "{0}" -update_str2 "{1}" "{2}" "{3}\*"'.format( output_folder, str2_file, asm_file, converted_folder )
-			output_cmds.append( cmd )
+			cmd = [ "vpkg_wd.exe", "-output_dir", output_folder, "-update_str2",
+				str2_file, asm_file, os.path.join( converted_folder, "*" )]
+			cmd_str = " ".join( cmd )
+			output_cmds.append( cmd_str )
 			print cmd
 
 			try:
-				subprocess.check_call( cmd, shell = False, stderr = subprocess.STDOUT)
+				proc_check_call( cmd, stderr = subprocess.STDOUT)
 			except subprocess.CalledProcessError as error:
 				code = error.returncode
 				command_failed.append( command_index )
 				if code in ( 1, 2 ):
-					print 'The command failed\n  {0}'.format( cmd )
+					print 'The command failed\n  {0}'.format( cmd_str )
 				elif code in ( 3, 4, 5 ):
-					print 'The command had some issues\n  {0}'.format( cmd )
+					print 'The command had some issues\n  {0}'.format( cmd_str )
 
 			finally:
 				processed = True
@@ -786,10 +748,11 @@ def crunch_rule( filename, ):
 						copied_cruncher_file = cruncher_file
 						if os.path.lexists( cruncher_file ):
 							if base_filename.startswith( MESH_CRUNCHER ) or base_filename.startswith( MAT_CRUNCHER ):
-								print '{0} -p {1} {2}'.format( copied_cruncher_file, shaders_file, filename )
-								retval = subprocess.call( '"{0}" -p "{1}" "{2}"'.format( copied_cruncher_file, shaders_file, filename ) )
+								print copied_cruncher_file, "-p", shaders_file, filename
+								retval = proc_call( [copied_cruncher_file, "-p", shaders_file, filename] )
 							else:
-								retval = subprocess.call( '"{0}" "{1}"'.format( copied_cruncher_file, filename ) )
+								print copied_cruncher_file, filename
+								retval = proc_call( [copied_cruncher_file, filename] )
 
 							# remove the file
 							#os.remove( copied_cruncher_file )
@@ -2449,9 +2412,11 @@ def load_fbx_scene( fbx_scene, do_3dsmax, do_Maya ):
 
 
 
+		global IS_MAYAYUP
+		global IS_3DSMAX
+
 		#REPLACING THIS CHECK NOW THAT WE ARE CONVERTING TO MAX Axis
 		if fbx_scene_axis == FbxCommon.FbxAxisSystem.MayaYUp:
-			global IS_MAYAYUP
 			IS_MAYAYUP = True
 
 			# construct the axis
@@ -2466,7 +2431,6 @@ def load_fbx_scene( fbx_scene, do_3dsmax, do_Maya ):
 			coordinate_system_transform.SetColumn( 3, FbxCommon.FbxVector4( ) )	#Position
 
 		elif fbx_scene_axis == FbxCommon.FbxAxisSystem.Max:
-			global IS_3DSMAX
 			IS_3DSMAX = True
 
 			# create the coord sys transform
@@ -2476,10 +2440,7 @@ def load_fbx_scene( fbx_scene, do_3dsmax, do_Maya ):
 			coordinate_system_transform.SetColumn( 3, FbxCommon.FbxVector4( ) )	#Position
 
 		if do_3dsmax:
-			global IS_MAYAYUP
 			IS_MAYAYUP = False
-
-			global IS_3DSMAX
 			IS_3DSMAX = True
 
 			right_vector.Set( 1.0, 0.0, 0.0, 0.0)
@@ -3434,8 +3395,8 @@ class App_Frame( wx.Frame ):
 		package_hsizer1 = wx.BoxSizer( wx.HORIZONTAL )
 		package_hsizer2 = wx.BoxSizer( wx.HORIZONTAL )
 
-		self.package_folder_button = wx.Button( self, 3, 'Folder', size = ( 50, 20), style = 2)
-		self.package_text = wx.TextCtrl( self, -1, "...", size = ( 310, 21 ), style=wx.TE_READONLY  )
+		self.package_folder_button = wx.Button( self, 3, 'Folder', size = ( 50, 20 ) )
+		self.package_text = wx.TextCtrl( self, -1, "...", size = ( 310, 21 ) ) #style=wx.TE_READONLY
 		self.package_text.SetBackgroundColour((210,184,134))
 		self.package_folder_button.Bind( wx.EVT_BUTTON, self.on_set_game_folder )
 
@@ -3452,7 +3413,7 @@ class App_Frame( wx.Frame ):
 		package_hsizer1.Add( self.package_text, 0 )
 		package_hsizer1.AddSpacer( 5 )
 
-		self.rig_button = wx.ToggleButton( self, 3,'Rigx ', size = ( 50, 20 ), style=2 )
+		self.rig_button = wx.ToggleButton( self, 3,'Rigx ', size = ( 50, 20 ) )
 		#self.rig_button.SetForegroundColour((210,184,134))
 		self.rig_text = wx.TextCtrl( self, -1, "*.rigx", size = ( 310, 21 ), ) # style=wx.TE_READONLY  )
 		self.rig_text.SetBackgroundColour((210,184,134))
@@ -3463,7 +3424,7 @@ class App_Frame( wx.Frame ):
 		export_hsizer1.Add( self.rig_text, 0 )
 		export_hsizer1.AddSpacer( 5 )
 
-		self.cmesh_button = wx.ToggleButton( self, 3,'Cmeshx ', size = ( 50, 20 ), style=0 )
+		self.cmesh_button = wx.ToggleButton( self, 3,'Cmeshx ', size = ( 50, 20 ) )
 		self.cmesh_text = wx.TextCtrl( self, -1, "*.cmeshx", size = ( 310, 21 ), ) #style=wx.TE_READONLY  )
 		self.cmesh_text.SetBackgroundColour((210,184,134))
 		self.cmesh_text.Bind( wx.EVT_TEXT, self.on_set_mesh_text )
@@ -3474,7 +3435,7 @@ class App_Frame( wx.Frame ):
 		export_hsizer2.Add( self.cmesh_text, 0 )
 		export_hsizer2.AddSpacer( 5 )
 
-		self.matlib_button = wx.ToggleButton( self, 3,'Matlibx ', size = ( 50, 20 ), style=1 )
+		self.matlib_button = wx.ToggleButton( self, 3,'Matlibx ', size = ( 50, 20 ) )
 		self.matlib_text = wx.TextCtrl( self, -1, "*.matlibx", size = ( 310, 21 ), ) # style=wx.TE_READONLY  )
 		self.matlib_text.SetBackgroundColour((210,184,134))
 		self.matlib_text.Bind( wx.EVT_TEXT, self.on_set_mat_text )
@@ -3484,7 +3445,7 @@ class App_Frame( wx.Frame ):
 		export_hsizer3.Add( self.matlib_text, 0 )
 		export_hsizer3.AddSpacer( 5 )
 
-		self.morph_button = wx.ToggleButton( self, 3,'Morphx ', size = ( 50, 20 ), style=1 )
+		self.morph_button = wx.ToggleButton( self, 3,'Morphx ', size = ( 50, 20 ) )
 		self.morph_text = wx.TextCtrl( self, -1, "*.morphx", size = ( 310, 21 ), ) # style=wx.TE_READONLY  )
 		self.morph_text.SetBackgroundColour((210,184,134))
 		self.morph_text.Bind( wx.EVT_TEXT, self.on_set_mat_text )
@@ -5078,7 +5039,7 @@ class App_Frame( wx.Frame ):
 					if self.game_folder:
 						if os.path.lexists( self.game_folder ):
 							self.package_text.Enable( True )
-							self.package_text.SetLabelText( self.game_folder )
+							self.package_text.SetValue( self.game_folder )
 							self.package_button.Enable( True )
 
 		self.Layout( )
