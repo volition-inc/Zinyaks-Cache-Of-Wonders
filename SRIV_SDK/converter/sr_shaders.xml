@@ -194,9 +194,9 @@
 			<Specular_Color>{1.000000, 1.000000, 1.000000, 1.000000}</Specular_Color>
 			<Sphere_Map_Amount></Sphere_Map_Amount>
 			<Sphere_Map></Sphere_Map>
-			<Diffuse_Color_c>{0.000000, 0.000000, 1.000000, 1.000000}</Diffuse_Color_c>
-			<Diffuse_Color_b>{0.000000, 1.000000, 0.000000, 1.000000}</Diffuse_Color_b>
-			<Diffuse_Color_a>{1.000000, 0.000000, 0.000000, 1.000000}</Diffuse_Color_a>
+			<Diffuse_Color_c>{1.000000, 1.000000, 1.000000, 1.000000}</Diffuse_Color_c>
+			<Diffuse_Color_b>{0.552012, 0.116971, 0.116971, 1.000000}</Diffuse_Color_b>
+			<Diffuse_Color_a>{0.076185, 0.000000, 1.000000, 1.000000}</Diffuse_Color_a>
 			<Pattern_Map_TilingV>1.000000</Pattern_Map_TilingV>
 			<Pattern_Map_TilingU>1.000000</Pattern_Map_TilingU>
 			<pattern_map></pattern_map>
@@ -416,6 +416,25 @@
 			<is_ctg_shader>false</is_ctg_shader>
 			<material_name></material_name>
 			<shader>privacy_bar</shader>
-		</material>	
+		</material>
+		<material>
+			<mtl_id></mtl_id>
+			<VarID>0</VarID>			
+			<Mat_Glows>1</Mat_Glows>
+			<Diffuse_Color>1.000000 1.000000 1.000000 1.000000</Diffuse_Color>
+			<Normal_Map_Height>1.000000</Normal_Map_Height>
+			<Normal_Map_TilingU>1.000000</Normal_Map_TilingU>
+			<Normal_Map_TilingV>1.000000</Normal_Map_TilingV>
+			<Self_Illumination>75.500000</Self_Illumination>
+			<Specular_Alpha>1.000000</Specular_Alpha>
+			<Specular_Color>1.000000 1.000000 1.000000 1.000000</Specular_Color>
+			<Specular_Map_Amount>1.000000</Specular_Map_Amount>
+			<Specular_Power>4.000000</Specular_Power>
+			<Diffuse_Map></Diffuse_Map>
+			<glow_Mask_Map></glow_Mask_Map>
+			<Normal_Map></Normal_Map>
+			<Specular_Map></Specular_Map>	
+			<shader>ir_glowmask_dns</shader>			
+		</material>
 	</materials>
 </root>
